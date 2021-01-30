@@ -57,7 +57,27 @@ public class ArticoloServiceImpl implements ArticoloService {
 
 	@Override
 	public void aggiorna(Articolo input) throws Exception {
-		// TODO Auto-generated method stub
+		// questo è come una connection
+				EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
+
+				try {
+					// questo è come il MyConnection.getConnection()
+					entityManager.getTransaction().begin();
+
+					// uso l'injection per il dao
+					articoloDao.setEntityManager(entityManager);
+
+					// eseguo quello che realmente devo fare
+					articoloDao.update(input);
+
+					entityManager.getTransaction().commit();
+				} catch (Exception e) {
+					entityManager.getTransaction().rollback();
+					e.printStackTrace();
+					throw e;
+				} finally {
+					LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+				}
 	}
 
 	@Override
@@ -88,13 +108,46 @@ public class ArticoloServiceImpl implements ArticoloService {
 
 	@Override
 	public void rimuovi(Articolo input) throws Exception {
-		// TODO Auto-generated method stub
+		// questo è come una connection
+		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
+
+		try {
+			// questo è come il MyConnection.getConnection()
+			entityManager.getTransaction().begin();
+
+			// uso l'injection per il dao
+			articoloDao.setEntityManager(entityManager);
+
+			// eseguo quello che realmente devo fare
+			articoloDao.delete(input);
+
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
+			e.printStackTrace();
+			throw e;
+		} finally {
+			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+		}
 	}
 
 	@Override
 	public List<Articolo> findByExample(Articolo input) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		// questo è come una connection
+		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
+
+		try {
+			// uso l'injection per il dao
+			articoloDao.setEntityManager(entityManager);
+
+			// eseguo quello che realmente devo fare
+			return articoloDao.findByExample(input);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+		}
 	}
 
 }
