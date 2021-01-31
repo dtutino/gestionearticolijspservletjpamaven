@@ -72,7 +72,7 @@
 		                        <td>
 									<a class="btn  btn-sm btn-outline-secondary" href="ExecuteVisualizzaArticoloServlet?idArticolo=<%=item.getId() %>">Visualizza</a>
 									<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="PrepareEditArticoloServlet?idArticolo=<%=item.getId() %>">Edit</a>
-									<a class="btn btn-outline-danger btn-sm" href="laservletperrimuovere">Delete</a>
+									<a class="btn btn-outline-danger btn-sm" href="PrepareDeleteArticoloServlet?idArticolo=<%=item.getId() %>">Delete</a>
 								</td>
 		                    </tr>
 		                    <% } %>

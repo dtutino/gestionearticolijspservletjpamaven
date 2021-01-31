@@ -22,6 +22,7 @@
           <a class="dropdown-item" href="index.jsp">Home</a>
           <a class="dropdown-item" href="ListArticoliServlet">Risultati</a>
           <a class="dropdown-item" href="PrepareInsertArticoloServlet">Inserisci nuovo elemento</a>
+          <a class="dropdown-item" href="PrepareSearchArticoloServlet">Cerca un articolo</a>
         </div>
       </li>
     </ul>
