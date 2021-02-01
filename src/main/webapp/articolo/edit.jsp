@@ -24,36 +24,34 @@
 		
 		<div class='card'>
 		    <div class='card-header'>
-		        <h5>Inserisci nuovo elemento</h5> 
+		        <h5>Modifica</h5> 
 		    </div>
 		    
 		    <% Articolo articoloInPagina = (Articolo)request.getAttribute("modifica_articolo_attr"); %>
 		    
 		    <div class='card-body'>
 
-					<h6 class="card-title">I campi con <span class="text-danger">*</span> sono obbligatori</h6>
-
 					<form method="post" action="ExecuteEditArticoloServlet?idArticolo=<%=articoloInPagina.getId() %>" novalidate="novalidate">
 					
 						<div class="form-row">
 							<div class="form-group col-md-6">
-								<label>Codice <span class="text-danger">*</span></label>
+								<label>Codice</label>
 								<input type="text" name="codice" id="codice" class="form-control" value="<%=articoloInPagina.getCodice() %>" required>
 							</div>
 							
 							<div class="form-group col-md-6">
-								<label>Descrizione <span class="text-danger">*</span></label>
+								<label>Descrizione</label>
 								<input type="text" name="descrizione" id="descrizione" class="form-control" value="<%=articoloInPagina.getDescrizione() %>" required>
 							</div>
 						</div>
 						
 						<div class="form-row">	
 							<div class="form-group col-md-6">
-								<label>Prezzo <span class="text-danger">*</span></label>
+								<label>Prezzo</label>
 								<input type="number" class="form-control" name="prezzo" id="prezzo" value="<%=articoloInPagina.getPrezzo() %>" required>
 							</div>
 							<div class="form-group col-md-3">
-								<label>Data di Arrivo<span class="text-danger">*</span></label>
+								<label>Data di Arrivo</label>
                         		<input class="form-control" id="dataArrivo" type="date" value="<%=articoloInPagina.getDataArrivo()!=null? new SimpleDateFormat("dd/MM/yyyy").format(articoloInPagina.getDataArrivo()):"N.D."  %>"
                             		title="formato : gg/mm/aaaa"  name="dataArrivo" required>
 							</div>
