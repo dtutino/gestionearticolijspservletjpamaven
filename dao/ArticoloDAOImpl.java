@@ -47,29 +47,35 @@ public class ArticoloDAOImpl implements ArticoloDAO {
 		entityManager.remove(entityManager.merge(input));
 
 	}
+public List<Articolo> findByExample(Articolo input) {
+		Map<String, Object> paramaterMap = new HashMap<String, Object>();
+		List<String> whereCause = new ArrayList<String>();
 
-	public List<Articolo> findByExample(Articolo input) throws Exception {
-		if (input == null)
-			throw new Exception("Valore di input non ammesso.");
+		StringBuilder queryBuilder = new StringBuilder();
+		queryBuilder.append("select a from Articolo a ");
 
-		String queryBase = "select a from Articolo where 1 = 1";
-
-		TypedQuery<Articolo> query = entityManager.createQuery(queryBase, Articolo.class);
-
-		if (input.getCodice() != null && !input.getCodice().isEmpty()) {
-			queryBase += " and codice = '" + input.getCodice() + "'";
+		if (!StringUtils.isEmpty(input.getCodice())) {
+			whereCause.add(" a.codice =:codice ");
+			paramaterMap.put("codice", input.getCodice());
 		}
-
-		if (input.getDescrizione() != null && !input.getDescrizione().isEmpty()) {
-			queryBase += " and descrizione = '" + input.getDescrizione() + "'";
+		if (!StringUtils.isEmpty(input.getDescrizione())) {
+			whereCause.add(" a.descrizione =:descrizione ");
+			paramaterMap.put("descrizione", input.getDescrizione());
 		}
-
-		if (input.getPrezzo() != null) {
-			queryBase += " and prezzo = '" + input.getPrezzo() + "'";
+		if (input.getPrezzo() != null && input.getPrezzo() != 0) {
+			whereCause.add(" a.prezzo =:prezzo ");
+			paramaterMap.put("prezzo", input.getPrezzo());
 		}
-
 		if (input.getDataArrivo() != null) {
-			queryBase += " and dataarrivo = '" + new java.sql.Date(input.getDataArrivo().getTime()) + "'";
+			whereCause.add("a.dataarrivo =:dataarrivo ");
+			paramaterMap.put("dataarrivo", input.getDataArrivo());
+		}
+
+		queryBuilder.append(" where " + StringUtils.join(whereCause, " and "));
+		TypedQuery<Articolo> query = entityManager.createQuery(queryBuilder.toString(), Articolo.class);
+
+		for (String key : paramaterMap.keySet()) {
+			query.setParameter(key, paramaterMap.get(key));
 		}
 
 		return query.getResultList();
